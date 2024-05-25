@@ -6,7 +6,7 @@
 This project was made in the context of the CH-200 Practical Programming for chemistry course at EPFL by two second year Bachelor students in Chemistry and Chemical engineering. 
 
 ## Authors
-- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="60">](https://github.com/Juan-Salafranca)
+- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="60">](https://github.com/Marie-vanrossum)
 - Juan Salafranca Martinez, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="60">](https://github.com/Juan-Salafranca)
 
 ## Overview
