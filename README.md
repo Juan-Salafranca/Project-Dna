@@ -16,5 +16,10 @@ The Protein Analysis Package is a Python package designed to perform various ana
 - HPLC Retention Coefficient Calculation: Calculate the retention coefficient of a protein sequence in HPLC using given retention values for amino acids.
 - Polarity evaluation: 
 
+## Installation
+
 ## License
 This project is open-source and released under the MIT License.
+
+## Contact
+For any questions or issues, please contact juan.salafrancamartinez@epfl.ch or marie.vanrossum@epfl.ch
