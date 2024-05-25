@@ -6,8 +6,8 @@
 This project was made in the context of the CH-200 Practical Programming for chemistry course at EPFL by two second year Bachelor students in Chemistry and Chemical engineering. 
 
 ## Authors
-- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL. <img src="./assets/GitHubSymb.png" alt="Project Logo" width="60" height="30">
-- Juan Salafranca Martinez, Bsc in Chemistry and chemical engeneering at EPFL. <img src="./images/logo.png" alt="Project Logo" width="60" height="30">
+- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="100">](https://github.com/Juan-Salafranca)
+- Juan Salafranca Martinez, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="100">](https://github.com/Juan-Salafranca)
 
 ## Overview
 The Protein Analysis Package is a Python package designed to perform various analyses on ADN and their respective protein sequences. The package includes functions to convert ADN sequences into protein sequences by evaluating all possible frames of ADN. It is also able to analyse the protein sequences and calculate the hydrophobicity score, molecular weight, likelihood of secondary structure configurations (beta-sheet, alpha-helix, and beta-turn), and the retention coefficient in High-Performance Liquid Chromatography (HPLC) based on the amino acid sequences.
