@@ -19,7 +19,7 @@ The Protein Analysis Package is a Python package designed to perform various ana
 ## Installation
 
 ## License
-This project is open-source and released under the [MIT License](./LICENSE).
+This project is open-source and released under the [MIT License](./LICENSE.txt).
 
 ## Contact
 For any questions or issues, please contact juan.salafrancamartinez@epfl.ch or marie.vanrossum@epfl.ch
