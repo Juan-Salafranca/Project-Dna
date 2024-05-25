@@ -1,6 +1,6 @@
 # DNA and protein analysis tool : DNAPROT
 
-<img src="./assets/project_logo.jpg" alt="¨Project logo" width="400">
+<img src="./assets/project_logo.jpg" alt="¨Project logo" width="600">
 
 ## Introduction
 This project was made in the context of the CH-200 Practical Programming for chemistry course at EPFL by two second year Bachelor students in Chemistry and Chemical engineering. 
