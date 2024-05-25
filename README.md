@@ -1,11 +1,15 @@
 # DNA and protein analysis tool : DNAPROT
 
+<div style="text-align: center;">
+  <img src="./assets/project_logo.jpg" alt="Alt text" width="400" height="400">
+</div>
+
 ## Introduction
 This project was made in the context of the CH-200 Practical Programming for chemistry course at EPFL by two second year Bachelor students in Chemistry and Chemical engineering. 
 
 ## Authors
-- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL.
-- Juan Salafranca Martinez, Bsc in Chemistry and chemical engeneering at EPFL.
+- Marie Van Rossum, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="60">](https://github.com/Marie-vanrossum)
+- Juan Salafranca Martinez, Bsc in Chemistry and chemical engeneering at EPFL. [<img src="./assets/GitHubSymb.png" alt="Profile Picture" width="60">](https://github.com/Juan-Salafranca)
 
 ## Overview
 The Protein Analysis Package is a Python package designed to perform various analyses on ADN and their respective protein sequences. The package includes functions to convert ADN sequences into protein sequences by evaluating all possible frames of ADN. It is also able to analyse the protein sequences and calculate the hydrophobicity score, molecular weight, likelihood of secondary structure configurations (beta-sheet, alpha-helix, and beta-turn), and the retention coefficient in High-Performance Liquid Chromatography (HPLC) based on the amino acid sequences.
