@@ -35,5 +35,8 @@ Attention: for the transcription functions to work, a file containing the geneti
 ## License
 This project is open-source and released under the [MIT License](./LICENSE.txt).
 
+## Sources
+This project used different science papers to achieve its goal and determine properties of proteins. These sources can be found in the document: [Sources](./SOURCES.md).
+
 ## Contact
 For any questions or issues, please contact juan.salafrancamartinez@epfl.ch or marie.vanrossum@epfl.ch
