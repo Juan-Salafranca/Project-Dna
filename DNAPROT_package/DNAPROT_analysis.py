@@ -315,9 +315,6 @@ def calculate_polarity_score(protein: str) -> float:
 import os
 import pandas as pd
 
-
-
-
 def get_unique_folder_path(base_folder):
     """
     This function takes a base folder path and returns a unique folder path by adding a suffix if the folder already exists.
@@ -329,80 +326,84 @@ def get_unique_folder_path(base_folder):
         counter += 1
     return unique_folder
 
+def DNAtxt_ToProtExcl_Analysis(sections, section_number=None, output_folder=None):
+    if section_number is None:
+        section_number = 1
+    if output_folder is None:
+        base_output_folder = os.path.join(os.getcwd(), "DNAtoPROT_results")
+        output_folder = get_unique_folder_path(base_output_folder)
+        os.makedirs(output_folder)
 
+    # If sections is a list of DNA sequences
+    if isinstance(sections, list):
+        for i in range(len(sections)):
+            dna_sequence = sections[i]
+            DNAtxt_ToProtExcl_Analysis(dna_sequence, i + 1, output_folder)
+    else:
+        dna_sequence = sections
+        rna_sequence = transcribe_dna_to_rna(dna_sequence)
 
+        # Translate RNA to protein with start codon "AUG" for 5'3'
+        protein_sequence_rna53 = translate_rna_to_proteins_all_frames(rna_sequence)
+        
+        # Find the complementary of the DNA and RNA sequences
+        dna_sequence35 = complementary_sequences(dna_sequence)
+        rna_sequence35 = transcribe_dna_to_rna(dna_sequence35)
+        rna_sequence35_inv = flip_rna_sequence(rna_sequence35)
+        
+        # Translate RNA to protein with start codon "AUG" for 5'3'
+        protein_sequence_rna35 = translate_rna_to_proteins_all_frames(rna_sequence35_inv)
+        
+        # Translating one-letter symbol amino acid into three
+        protein_sequence_3letters53 = translate_one_letter_to_three_letter_list(protein_sequence_rna53)
+        protein_sequence_3letters35 = translate_one_letter_to_three_letter_list(protein_sequence_rna35)
 
+        # Compute additional properties
+        hydrophobicity_53 = [calculate_hydrophobicity(protein) for protein in protein_sequence_rna53]
+        molecular_weight_53 = [calculate_molecular_weight(protein) for protein in protein_sequence_rna53]
+        retention_coefficient_53 = [calculate_retention_coefficient(protein) for protein in protein_sequence_rna53]
+        config_likelihoods_53 = [calculate_configuration_likelihoods(protein) for protein in protein_sequence_rna53]
+        polarity_53 = [calculate_polarity_score(protein) for protein in protein_sequence_rna53]
 
+        hydrophobicity_35 = [calculate_hydrophobicity(protein) for protein in protein_sequence_rna35]
+        molecular_weight_35 = [calculate_molecular_weight(protein) for protein in protein_sequence_rna35]
+        retention_coefficient_35 = [calculate_retention_coefficient(protein) for protein in protein_sequence_rna35]
+        config_likelihoods_35 = [calculate_configuration_likelihoods(protein) for protein in protein_sequence_rna35]
+        polarity_35 = [calculate_polarity_score(protein) for protein in protein_sequence_rna35]
 
-def main(dna_sequence, section_number, output_folder):
-    # Translate RNA to protein with start codon "AUG" for 5'3'
-    protein_sequence_rna53 = translate_rna_to_proteins_all_frames(rna_sequence)
-    
-    # Find the complementary of the DNA and RNA sequences
-    dna_sequence35 = complementary_sequences(dna_sequence)
-    rna_sequence35 = transcribe_dna_to_rna(dna_sequence35)
-    rna_sequence35_inv = flip_rna_sequence(rna_sequence35)
-    
-    # Translate RNA to protein with start codon "AUG" for 5'3'
-    protein_sequence_rna35 = translate_rna_to_proteins_all_frames(rna_sequence35_inv)
-    
-    # Translating one-letter symbol amino acid into three
-    protein_sequence_3letters53 = translate_one_letter_to_three_letter_list(protein_sequence_rna53)
-    protein_sequence_3letters35 = translate_one_letter_to_three_letter_list(protein_sequence_rna35)
+        # Create DataFrames for displaying protein sequences
+        df53 = pd.DataFrame({
+            "Frame 1L (5'->3')": protein_sequence_rna53,
+            "Frame 3L (5'->3')": protein_sequence_3letters53,
+            "Hydrophobicity": hydrophobicity_53,
+            "Molecular Weight": molecular_weight_53,
+            "Retention Coefficient": retention_coefficient_53,
+            "beta-sheet score": [beta_sheet for _, _, beta_sheet, _, _ in config_likelihoods_53],
+            "alpha-helix score": [alpha_helix for _, _, _, alpha_helix, _ in config_likelihoods_53],
+            "beta-turn score": [beta_turn for _, _, _, _, beta_turn in config_likelihoods_53],
+            "Most probable configuration": [likelihood for likelihood, _, _, _, _ in config_likelihoods_53],
+            "polarity": polarity_53
+        })
 
-    # Compute additional properties
-    hydrophobicity_53 = [calculate_hydrophobicity(protein) for protein in protein_sequence_rna53]
-    molecular_weight_53 = [calculate_molecular_weight(protein) for protein in protein_sequence_rna53]
-    retention_coefficient_53 = [calculate_retention_coefficient(protein) for protein in protein_sequence_rna53]
-    config_likelihoods_53 = [calculate_configuration_likelihoods(protein) for protein in protein_sequence_rna53]
-    polarity_53 = [calculate_polarity_score(protein) for protein in protein_sequence_rna53]
+        df35 = pd.DataFrame({
+            "Frame 1L (3'->5')": protein_sequence_rna35,
+            "Frame 3L (3'->5')": protein_sequence_3letters35,
+            "Hydrophobicity": hydrophobicity_35,
+            "Molecular Weight": molecular_weight_35,
+            "Retention Coefficient": retention_coefficient_35,
+            "beta-sheet score": [beta_sheet for _, _, beta_sheet, _, _ in config_likelihoods_35],
+            "alpha-helix score": [alpha_helix for _, _, _, alpha_helix, _ in config_likelihoods_35],
+            "beta-turn score": [beta_turn for _, _, _, _, beta_turn in config_likelihoods_35],
+            "Most probable configuration": [likelihood for likelihood, _, _, _, _ in config_likelihoods_35],
+            "polarity": polarity_35
+        })
 
-    hydrophobicity_35 = [calculate_hydrophobicity(protein) for protein in protein_sequence_rna35]
-    molecular_weight_35 = [calculate_molecular_weight(protein) for protein in protein_sequence_rna35]
-    retention_coefficient_35 = [calculate_retention_coefficient(protein) for protein in protein_sequence_rna35]
-    config_likelihoods_35 = [calculate_configuration_likelihoods(protein) for protein in protein_sequence_rna35]
-    polarity_35 = [calculate_polarity_score(protein) for protein in protein_sequence_rna35]
-    
-     # Create DataFrames for displaying protein sequences
-    df53 = pd.DataFrame({
-        "Frame 1L (5'->3')": protein_sequence_rna53,
-        "Frame 3L (5'->3')": protein_sequence_3letters53,
-        "Hydrophobicity": hydrophobicity_53,
-        "Molecular Weight": molecular_weight_53,
-        "Retention Coefficient": retention_coefficient_53,
-        "beta-sheet score": [beta_sheet for _, _, beta_sheet, _, _ in config_likelihoods_53],
-        "alpha-helix score": [alpha_helix for _, _, _, alpha_helix, _ in config_likelihoods_53],
-        "beta-turn score": [beta_turn for _, _, _, _, beta_turn in config_likelihoods_53],
-        "Most probable configuration": [likelihood for likelihood, _, _, _, _ in config_likelihoods_53],
-        "polarity": polarity_53
-    })
-
-    df35 = pd.DataFrame({
-        "Frame 1L (3'->5')": protein_sequence_rna35,
-        "Frame 3L (3'->5')": protein_sequence_3letters35,
-        "Hydrophobicity": hydrophobicity_35,
-        "Molecular Weight": molecular_weight_35,
-        "Retention Coefficient": retention_coefficient_35,
-        "beta-sheet score": [beta_sheet for _, _, beta_sheet, _, _ in config_likelihoods_35],
-        "alpha-helix score": [alpha_helix for _, _, _, alpha_helix, _ in config_likelihoods_35],
-        "beta-turn score": [beta_turn for _, _, _, _, beta_turn in config_likelihoods_35],
-        "Most probable configuration": [likelihood for likelihood, _, _, _, _ in config_likelihoods_35],
-        "polarity": polarity_35
-    })
-    
-    # Create output file path
-    output_file = os.path.join(output_folder, f"section_{section_number}.xlsx")
-    
-    with pd.ExcelWriter(output_file) as writer:
-        df53.to_excel(writer, sheet_name="Frame (5'->3')")
-        df35.to_excel(writer, sheet_name="Frame (3'->5')")
+        # Create output file path
+        output_file = os.path.join(output_folder, f"section_{section_number}.xlsx")
+        
+        with pd.ExcelWriter(output_file) as writer:
+            df53.to_excel(writer, sheet_name="Frame (5'->3')")
+            df35.to_excel(writer, sheet_name="Frame (3'->5')")
 
 if __name__ == "__main__":
-    base_output_folder = os.path.join(os.getcwd(), "DNAtoPROT_results")
-    output_folder = get_unique_folder_path(base_output_folder)
-    os.makedirs(output_folder)
-
-    for i in range(len(sections)):
-        dna_sequence = sections[i]
-        rna_sequence = transcribe_dna_to_rna(dna_sequence)
-        main(dna_sequence, i+1, output_folder)
+    DNAtxt_ToProtExcl_Analysis(sections)
