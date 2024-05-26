@@ -26,6 +26,12 @@ The Protein Analysis Package is a Python package designed to perform various ana
  
 ## Installation
 
+
+## Usage
+
+Attention: for the transcription functions to work, a file containing the genetic code file must be in the same repo as the script. One can use the file provided alongside this package or use a different code for other genetic codes (ex: mitochondrial ADN code, etc...)
+
+
 ## License
 This project is open-source and released under the [MIT License](./LICENSE.txt).
 

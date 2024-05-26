@@ -326,7 +326,7 @@ def get_unique_folder_path(base_folder):
         counter += 1
     return unique_folder
 
-def DNAtxt_ToProtExcl_Analysis(sections, section_number=None, output_folder=None):
+def DNA_ToProtExcl_Analysis(sections, section_number=None, output_folder=None):
     if section_number is None:
         section_number = 1
     if output_folder is None:
@@ -406,4 +406,4 @@ def DNAtxt_ToProtExcl_Analysis(sections, section_number=None, output_folder=None
             df35.to_excel(writer, sheet_name="Frame (3'->5')")
 
 if __name__ == "__main__":
-    DNAtxt_ToProtExcl_Analysis(sections)
+    DNA_ToProtExcl_Analysis(sections)
