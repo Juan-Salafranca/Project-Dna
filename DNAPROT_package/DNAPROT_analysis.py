@@ -1,3 +1,98 @@
+
+def find_shine_dalgarno(sequence, shine_dalgarno="AGGAGG"):
+    """Find the Shine-Dalgarno sequence in the given DNA sequence."""
+    index = sequence.find(shine_dalgarno)
+    if index != -1:
+        return index
+    else:
+        return None
+
+
+
+def cut_sequence(sequence, shine_dalgarno="AGGAGG"):
+    """Cut the DNA sequence based on the Shine-Dalgarno sequence."""
+    sections = []
+    start_index = find_shine_dalgarno(sequence, shine_dalgarno)
+    if start_index is not None:
+        start_index += len(shine_dalgarno)
+        while True:
+            index = find_shine_dalgarno(sequence[start_index:], shine_dalgarno)
+            if index is not None:
+                sections.append(sequence[start_index:start_index + index])
+                start_index += index + len(shine_dalgarno)
+            else:
+                sections.append(sequence[start_index:])
+                break
+    return sections
+
+
+
+def translate_to_uppercase(sequence):
+    """Translate the DNA sequence to uppercase."""
+    return sequence.upper()
+
+
+
+
+def filter_dna_sequence(sequence):
+    """Filter out characters that are not 'A', 'T', 'C', or 'G'."""
+    return ''.join(filter(lambda x: x in 'ATCG', sequence.upper()))
+
+
+
+
+def read_dna_sequence(filename):
+    """Read DNA sequence from the document where the first column is empty."""
+    sequence = ""
+    read_started = False
+    with open(filename, 'r') as file:
+        for line in file:
+            if not read_started:
+                if line.startswith(" "):
+                    read_started = True  
+            else:
+                if line.strip() == "//":  
+                    read_started = False  
+                else:
+                    start_index = line.find(' ')
+                    while start_index != -1:  
+                        stop_index = line.find('//', start_index)
+                        if stop_index == -1:
+                            stop_index = len(line) 
+                        sequence += line[start_index:stop_index]
+                        start_index = line.find(' ', stop_index)
+    return sequence
+
+
+def ReadShineDalgarnoFromTxt(filename: str):
+    """Read DNA sequence from the document and process it."""
+    if not isinstance(filename, str):
+        raise TypeError("Filename must be a string")
+    
+    
+    dna_sequence = read_dna_sequence(filename)
+    
+    
+    dna_sequence = filter_dna_sequence(dna_sequence)
+    sections = cut_sequence(dna_sequence)
+    
+    # Write resulting sections to a file
+    with open("output.txt", "w") as file:
+        for i, section in enumerate(sections):
+            file.write(section + "\n")
+            if i < len(sections) - 1:
+                file.write("//\n") 
+        file.write("//\n")
+    
+    print("Sections written to output.txt")
+    sections = separate_sections("output.txt")
+    return sections
+
+
+if __name__ == "__main__":
+    ReadShineDalgarnoFromTxt(filename)
+
+
 def separate_sections(filename):
     """Read the file and separate sections of DNA into strings."""
     sections = []
@@ -14,7 +109,10 @@ def separate_sections(filename):
 
 
 
+
+
 def read_genetic_code(filename):
+    """Reads the genetic code from a file."""
     genetic_code = {}
     with open(filename, 'r') as file:
         for line in file:
@@ -26,12 +124,14 @@ def read_genetic_code(filename):
 
 
 def transcribe_dna_to_rna(dna_sequence):
+    """ Transcribes a DNA sequence into an RNA sequence."""
     return dna_sequence.replace('T', 'U')
     
 
 
 
 def find_start_codons_rna(rna_sequence):
+    """ Finds start codons (AUG) in an RNA sequence."""
     start_codons = []
     for i in range(len(rna_sequence)):
         if rna_sequence[i:i+3] == "AUG":
@@ -43,6 +143,7 @@ def find_start_codons_rna(rna_sequence):
 
 
 def translate_rna_to_protein(rna_sequence):
+    """Translates an RNA sequence into a protein sequence using a genetic code."""
     genetic_code = read_genetic_code("genetic_code.txt")
     start_index = find_start_codons_rna(rna_sequence)
     if start_index == -1:  # No start codon found
@@ -64,6 +165,7 @@ def translate_rna_to_protein(rna_sequence):
 
 
 def complementary_sequences(dna_sequence):
+    """Generates the complementary DNA sequence."""
     complementary_dna = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
     comp_dna_sequence = ''.join(complementary_dna[base] for base in dna_sequence)
     return comp_dna_sequence
@@ -73,6 +175,7 @@ def complementary_sequences(dna_sequence):
 
 
 def flip_rna_sequence(rna_sequence):
+    """ Reverses the RNA sequence."""
     return rna_sequence[::-1]
 
 
@@ -80,6 +183,7 @@ def flip_rna_sequence(rna_sequence):
 
 
 def translate_rna_to_proteins_all_frames(rna_sequence):
+    """Translates RNA sequences into protein sequences in all reading frames."""
     proteins = []
     for start_index in find_start_codons_rna(rna_sequence):
         protein_sequence = translate_rna_to_protein(rna_sequence[start_index:])
@@ -91,6 +195,7 @@ def translate_rna_to_proteins_all_frames(rna_sequence):
 
 
 def translate_one_letter_to_three_letter_list(one_letter_sequences):
+    """Converts one-letter amino acid sequences to three-letter codes."""
     three_letter_code = {
         "A": "Ala", "C": "Cys", "D": "Asp", "E": "Glu",
         "F": "Phe", "G": "Gly", "H": "His", "I": "Ile",
@@ -114,8 +219,8 @@ def translate_one_letter_to_three_letter_list(one_letter_sequences):
 
 
 
-
 def calculate_hydrophobicity(protein: str) -> float:
+    """Calculates the hydrophobicity score of a protein sequence."""
     hydrophobicity_scale = {
         'A': 1.800,  # Alanine
         'R': -4.500, # Arginine
@@ -154,6 +259,7 @@ def calculate_hydrophobicity(protein: str) -> float:
 
 
 def calculate_molecular_weight(protein: str) -> float:
+    """Calculates the molecular weight of a protein sequence."""
     molecular_weights = {
         'A': 89.000,  # Alanine
         'R': 174.000, # Arginine
@@ -190,6 +296,7 @@ def calculate_molecular_weight(protein: str) -> float:
 
 
 def calculate_configuration_likelihoods(protein: str):
+    """Calculates the likelihood of different structural configurations for a protein."""
     beta_sheet = {
         'A': 0.830, 'R': 0.930, 'N': 0.890, 'D': 0.540, 'C': 1.190, 'Q': 1.100, 'E': 0.370,
         'G': 0.750, 'H': 0.870, 'I': 1.600, 'L': 1.300, 'K': 0.740, 'M': 1.050, 'F': 1.380,
@@ -238,6 +345,7 @@ def calculate_configuration_likelihoods(protein: str):
 
 
 def calculate_retention_coefficient(protein: str) -> float:
+    """Calculates the retention coefficient of a protein sequence."""
     retention_coefficients = {
         'A': 7.300,   # Alanine
         'R': -3.600,  # Arginine
@@ -275,6 +383,7 @@ def calculate_retention_coefficient(protein: str) -> float:
 
 
 def calculate_polarity_score(protein: str) -> float:
+    """Calculates the polarity score of a protein sequence."""
     polarity_scores = {
         'A': 0.000,   # Alanine
         'R': 52.000,  # Arginine
@@ -327,6 +436,7 @@ def get_unique_folder_path(base_folder):
     return unique_folder
 
 def DNA_ToProtExcl_Analysis(sections, section_number=None, output_folder=None):
+    """Performs DNA to protein transcription, translation and protein properties analysis. It then saves the results in Excel files."""
     if section_number is None:
         section_number = 1
     if output_folder is None:
