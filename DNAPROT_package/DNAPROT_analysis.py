@@ -41,30 +41,20 @@ def filter_dna_sequence(sequence):
 
 
 
-def read_dna_sequence(filename):
-    """Read DNA sequence from the document where the first column is empty."""
-    sequence = ""
-    read_started = False
-    with open(filename, 'r') as file:
+def read_dna_sequence(file_path):
+    """Extract DNA sequence from fasta document"""
+    with open(file_path, 'r') as file:
+        sequence_lines = []
+
         for line in file:
-            if not read_started:
-                if line.startswith(" "):
-                    read_started = True  
-            else:
-                if line.strip() == "//":  
-                    read_started = False  
-                else:
-                    start_index = line.find(' ')
-                    while start_index != -1:  
-                        stop_index = line.find('//', start_index)
-                        if stop_index == -1:
-                            stop_index = len(line) 
-                        sequence += line[start_index:stop_index]
-                        start_index = line.find(' ', stop_index)
+            line = line.strip()
+            if not line.startswith('>'):
+                sequence_lines.append(line)
+        sequence = ''.join(sequence_lines)
     return sequence
 
 
-def ReadShineDalgarnoFromTxt(filename: str):
+def ReadShineDalgarnoFromFasta(filename: str):
     """Read DNA sequence from the document and process it."""
     if not isinstance(filename, str):
         raise TypeError("Filename must be a string")
@@ -90,7 +80,7 @@ def ReadShineDalgarnoFromTxt(filename: str):
 
 
 if __name__ == "__main__":
-    ReadShineDalgarnoFromTxt(filename)
+    ReadShineDalgarnoFromFasta(filename)
 
 
 def separate_sections(filename):
