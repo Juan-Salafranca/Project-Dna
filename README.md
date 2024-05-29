@@ -43,7 +43,7 @@ Attention: for the transcription functions to work, a file containing the geneti
 
 A very basic usage for our package would be to generate the protein sequence and properties from a large .fasta file containing the DNA sequence.
 
-Start by importing the package and reading the start sequence. Create different sections from the generated "output.txt" file and then analyse it using thr
+Start by importing the package and reading the start sequence. Create different sections from the generated "output.txt" file and then analyse it using the "DNA_ToProtExcl_Analysis" function.
 
 ```python
 
