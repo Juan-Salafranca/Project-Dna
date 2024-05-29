@@ -88,7 +88,7 @@ def test_ReadShineDalgarnoFromFasta():
 # test read_genetic_code
 
 def test_read_genetic_code():
-    file_path = r'C:\Users\marie\Project-Dna\genetic_code.txt'
+    file_path = os.path.join('genetic_code.txt')
 
     expected_output = {
         'UUU': 'F',
