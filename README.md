@@ -44,7 +44,13 @@ Attention: for the transcription functions to work, a file containing the geneti
 Start by importing the package:
 
 ```
+
 import DNAPROT_analysis as DNAPROT
+
+ReadShineDalgarnoFromFasta('sequence.fasta')
+sections = separate_sections('output.txt')
+DNA_ToProtExcl_Analysis(sections, section_number=None, output_folder=None)
+
 ```
 
 
