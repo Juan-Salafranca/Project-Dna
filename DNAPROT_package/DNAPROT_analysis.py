@@ -438,7 +438,7 @@ def DNA_ToProtExcl_Analysis(sections, section_number=None, output_folder=None):
     if isinstance(sections, list):
         for i in range(len(sections)):
             dna_sequence = sections[i]
-            DNAtxt_ToProtExcl_Analysis(dna_sequence, i + 1, output_folder)
+            DNA_ToProtExcl_Analysis(dna_sequence, i + 1, output_folder)
     else:
         dna_sequence = sections
         rna_sequence = transcribe_dna_to_rna(dna_sequence)
