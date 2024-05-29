@@ -41,7 +41,9 @@ The package uses the following dependencies:
 
 Attention: for the transcription functions to work, a file containing the genetic code file must be in the same repo as the script. One can use the file provided alongside this package or use a different code for other genetic codes (ex: mitochondrial ADN code, etc...)
 
-Start by importing the package:
+A very basic usage for our package would be to generate the protein sequence and properties from a large .fasta file containing the DNA sequence.
+
+Start by importing the package and reading the start sequence. Create different sections from the generated "output.txt" file and then analyse it using thr
 
 ```python
 
@@ -52,6 +54,7 @@ sections = separate_sections('output.txt')
 DNA_ToProtExcl_Analysis(sections, section_number=None, output_folder=None)
 
 ```
+
 
 
 
