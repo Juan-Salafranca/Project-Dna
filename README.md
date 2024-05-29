@@ -43,7 +43,7 @@ Attention: for the transcription functions to work, a file containing the geneti
 
 Start by importing the package:
 
-```
+```python
 
 import DNAPROT_analysis as DNAPROT
 
