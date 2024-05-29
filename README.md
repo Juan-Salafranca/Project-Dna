@@ -1,4 +1,4 @@
-# DNA and protein analysis tool : DNAPROT
+# DNA and Protein analysis tool : DNAPROT
 
 <div style="text-align: center ;">
   <img src="./assets/project_logo.jpg" alt="Alt text" width="400" height="400">
