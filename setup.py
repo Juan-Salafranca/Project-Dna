@@ -8,8 +8,9 @@ setup(
     long_description_content_type='text/markdown',
     author='Juan Salafranca, Marie Van Rossum',
     author_email='juan.salafrancamartinez@epfl.ch , marie.vanrossum@epfl.ch',
-    url='https://github.com/juan-salafranca/my_package',
+    url='https://github.com/juan-salafranca/Project-Dna',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'pandas',
         'openpyxl',
