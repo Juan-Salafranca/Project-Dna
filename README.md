@@ -33,6 +33,7 @@ pip install DNAPROT
 The package uses the following dependencies:
 
 -Pandas (2.2.2)
+
 -Openpyxl (3.1.3)
 
 ## Usage
