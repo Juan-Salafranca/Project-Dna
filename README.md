@@ -41,6 +41,11 @@ Attention: for the transcription functions to work, a file containing the geneti
 
 Start by importing the package:
 
+```
+import DNAPROT_analysis as DNAPROT
+```
+
+
 
 ## License
 This project is open-source and released under the [MIT License](./LICENSE.txt).
